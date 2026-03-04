@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicias Artesanales - Panadería, Repostería & Restaurante</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #D4A574;
+            --secondary: #8B4513;
+            --accent: #F5E6D3;
+            --dark: #2C1810;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFFBF5;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-pattern {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.15);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 251, 245, 0.95);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4A574 0%, #F5E6D3 50%, #D4A574 100%);
+        }
+        
+        .wood-texture {
+            background-image: repeating-linear-gradient(90deg, #8B4513 0px, #A0522D 2px, #8B4513 4px);
+        }
+        
+        .floating-whatsapp {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .menu-item {
+            border-bottom: 2px dotted #D4A574;
+        }
+        
+        .chat-widget {
+            transition: all 0.3s ease;
+        }
+        
+        .chat-widget.hidden {
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .price-tag {
+            background: linear-gradient(135deg, #D4A574, #8B4513);
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #F5E6D3;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #D4A574;
+            border-radius: 5px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .gallery-item:hover::after {
+            left: 100%;
+        }
+        
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            overflow-y: auto;
+        }
+        
+        .admin-panel.active {
+            display: flex;
+        }
+        
+        .loader {
+            border-top-color: #D4A574;
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+        
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <!-- ============================================
+         SECCIÓN: NAVEGACIÓN FIJA
+         ============================================ -->
+    <nav class="nav-blur fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        <i class="fas fa-bread-slice"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-amber-900">Delicias Artesanales</h1>
+                        <p class="text-xs text-amber-700">Panadería & Restaurante</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#inicio" class="text-amber-900 hover:text-amber-600 font-medium transition">Inicio</a>
+                    <a href="#nosotros" class="text-amber-900 hover:text-amber-600 font-medium transition">Nosotros</a>
+                    <a href="#menu" class="text-amber-900 hover:text-amber-600 font-medium transition">Menú</a>
+                    <a href="#galeria" class="text-amber-900 hover:text-amber-600 font-medium transition">Galería</a>
+                    <a href="#pedidos" class="text-amber-900 hover:text-amber-600 font-medium transition">Pedidos</a>
+                    <a href="#contacto" class="text-amber-900 hover:text-amber-600 font-medium transition">Contacto</a>
+                    <button onclick="toggleCart()" class="relative bg-amber-100 p-2 rounded-full hover:bg-amber-200 transition">
+                        <i class="fas fa-shopping-cart text-amber-800"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="toggleAdmin()" class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition">
+                        <i class="fas fa-cog mr-2"></i>Admin
+                    </button>
+                </div>
+                
+                <button class="md:hidden text-amber-900 text-2xl" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-amber-200">
+            <div class="flex flex-col p-4 space-y-3">
+                <a href="#inicio" class="text-amber-900 py-2 border-b border-amber-100">Inicio</a>
+                <a href="#nosotros" class="text-amber-900 py-2 border-b border-amber-100">Nosotros</a>
+                <a href="#menu" class="text-amber-900 py-2 border-b border-amber-100">Menú</a>
+                <a href="#galeria" class="text-amber-900 py-2 border-b border-amber-100">Galería</a>
+                <a href="#pedidos" class="text-amber-900 py-2 border-b border-amber-100">Pedidos</a>
+                <a href="#contacto" class="text-amber-900 py-2">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         SECCIÓN: HERO / INICIO
+         ============================================ -->
+    <section id="inicio" class="hero-pattern min-h-screen flex items-center justify-center relative pt-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center text-white" data-aos="fade-up">
+            <div class="mb-6 inline-block">
+                <span class="bg-amber-500/20 backdrop-blur-sm border border-amber-400/30 text-amber-300 px-6 py-2 rounded-full text-sm font-semibold tracking-wider uppercase">
+                    Est. 1995 • Tradición Familiar
+                </span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Sabor que <span class="text-amber-400 italic">Enamora</span><br>
+                Tradición que <span class="text-amber-400 italic">Perdura</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl mx-auto font-light">
+                Pan artesanal recién horneado, repostería fina, comidas caseras y refrescos naturales. 
+                ¡El sabor de la tradición en cada bocado!
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <a href="#menu" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-utensils mr-2"></i>Ver Menú Completo
+                </a>
+                <a href="https://wa.me/1234567890?text=Hola!%20Quiero%20hacer%20un%20pedido" target="_blank" class="bg-white/10 backdrop-blur-md border-2 border-white/30 hover:bg-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg transition">
+                    <i class="fab fa-whatsapp mr-2"></i>Ordenar Ahora
+                </a>
+            </div>
+            
+            <!-- Estadísticas -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-amber-400">28+</div>
+                    <div class="text-sm text-gray-300">Años de Experiencia</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-amber-400">50k+</div>
+                    <div class="text-sm text-gray-300">Clientes Felices</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-amber-400">100+</div>
+                    <div class="text-sm text-gray-300">Productos Únicos</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-amber-400">4.9</div>
+                    <div class="text-sm text-gray-300">Calificación Promedio</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-white text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN: NOSOTROS
+         ============================================ -->
+    <section id="nosotros" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Nuestro equipo" 
+                             class="rounded-2xl shadow-2xl w-full object-cover h-[500px]">
+                        <div class="absolute -bottom-6 -right-6 bg-amber-500 text-white p-6 rounded-2xl shadow-xl">
+                            <div class="text-3xl font-bold">28</div>
+                            <div class="text-sm">Años de<br>Tradición</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left">
+                    <span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Nuestra Historia</span>
+                    <h2 class="text-4xl font-bold text-gray-900 mt-2 mb-6">Más que una Panadería, una <span class="text-amber-600">Familia</span></h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Desde 1995, hemos mantenido viva la tradición de la panadería artesanal. Lo que comenzó como un pequeño horno familiar 
+                        se ha convertido en un referente de sabor y calidad, ofreciendo no solo pan fresco, sino también repostería fina, 
+                        comidas caseras y refrescos naturales preparados con amor.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-amber-100 p-3 rounded-lg text-amber-600">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Ingredientes Frescos</h4>
+                                <p class="text-sm text-gray-600">Seleccionamos lo mejor cada mañana</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-amber-100 p-3 rounded-lg text-amber-600">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Recetas Tradicionales</h4>
+                                <p class="text-sm text-gray-600">Secretos de familia preservados</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-amber-100 p-3 rounded-lg text-amber-600">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Horneado Diario</h4>
+                                <p class="text-sm text-gray-600">Frescura garantizada 100%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-amber-100 p-3 rounded-lg text-amber-600">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Atención Personalizada</h4>
+                                <p class="text-sm text-gray-600">Trato familiar y cercano</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contacto" class="inline-flex items-center text-amber-600 font-semibold hover:text-amber-700 transition">
+                        Conoce más sobre nosotros <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN: CATEGORÍAS DESTACADAS
+         ============================================ -->
+    <section class="py-20 bg-amber-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Nuestros Servicios</span>
+                <h2 class="text-4xl font-bold text-gray-900 mt-2">Todo en un Solo Lugar</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Desde el pan de cada día hasta celebraciones especiales, tenemos todo lo que necesitas.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Panadería -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Panadería" 
+                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">Panadería</h3>
+                            <p class="text-sm opacity-90">Pan artesanal fresco</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">Pan blanco, integral, multigrano, baguettes, ciabatta y especialidades del día horneadas cada mañana.</p>
+                        <a href="#panaderia" class="text-amber-600 font-semibold hover:text-amber-700 flex items-center">
+                            Ver productos <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Repostería -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Repostería" 
+                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">Repostería</h3>
+                            <p class="text-sm opacity-90">Dulces y postres finos</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">Tortas personalizadas, cupcakes, galletas decoradas, postres individuales y mesas de dulces para eventos.</p>
+                        <a href="#reposteria" class="text-amber-600 font-semibold hover:text-amber-700 flex items-center">
+                            Ver productos <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Refresquería -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Refresquería" 
+                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">Refresquería</h3>
+                            <p class="text-sm opacity-90">Bebidas naturales</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">Jugos naturales, smoothies, café artesanal, chocolate caliente, malteadas y bebidas refrescantes.</p>
+                        <a href="#refresqueria" class="text-amber-600 font-semibold hover:text-amber-700 flex items-center">
+                            Ver productos <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Restaurante -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Restaurante" 
+                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">Restaurante</h3>
+                            <p class="text-sm opacity-90">Comida casera</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">Desayunos completos, almuerzos ejecutivos, cenas familiares y menú del día con opciones saludables.</p>
+                        <a href="#restaurante" class="text-amber-600 font-semibold hover:text-amber-700 flex items-center">
+                            Ver productos <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Comidas Rápidas -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover group" data-aos="fade-up" data-aos-delay="500">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Comidas Rápidas" 
+                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">Comidas Rápidas</h3>
+                            <p class="text-sm opacity-90">Rápido y delicioso</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">Hamburguesas artesanales, perros calientes, sándwiches, wraps, papas especiales y combos familiares.</p>
+                        <a href="#rapidas" class="text-amber-600 font-semibold hover:text-amber-700 flex items-center">
+                            Ver productos <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Especialidades -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover group" data-aos="fade-up" data-aos-delay="600">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Especialidades" 
+                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">Especialidades</h3>
+                            <p class="text-sm opacity-90">Edición limitada</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">Productos de temporada, creaciones del chef, ediciones especiales de festivales y colaboraciones únicas.</p>
+                        <a href="#especialidades" class="text-amber-600 font-semibold hover:text-amber-700 flex items-center">
+                            Ver productos <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN: MENÚ GENERAL CON PRECIOS
+         ============================================ -->
+    <section id="menu" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Nuestra Carta</span>
+                <h2 class="text-4xl font-bold text-gray-900 mt-2">Menú Completo</h2>
+                <p class="text-gray-600 mt-4">Precios actualizados y disponibilidad inmediata</p>
+            </div>
+            
+            <!-- Filtros de Categoría -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up">
+                <button onclick="filterMenu('all')" class="menu-filter active bg-amber-600 text-white px-6 py-2 rounded-full transition hover:bg-amber-700" data-category="all">Todo</button>
+                <button onclick="filterMenu('panaderia')" class="menu-filter bg-gray-200 text-gray-700 px-6 py-2 rounded-full transition hover:bg-amber-100" data-category="panaderia">Panadería</button>
+                <button onclick="filterMenu('reposteria')" class="menu-filter bg-gray-200 text-gray-700 px-6 py-2 rounded-full transition hover:bg-amber-100" data-category="reposteria">Repostería</button>
+                <button onclick="filterMenu('refresqueria')" class="menu-filter bg-gray-200 text-gray-700 px-6 py-2 rounded-full transition hover:bg-amber-100" data-category="refresqueria">Refresquería</button>
+                <button onclick="filterMenu('restaurante')" class="menu-filter bg-gray-200 text-gray-700 px-6 py-2 rounded-full transition hover:bg-amber-100" data-category="restaurante">Restaurante</button>
+                <button onclick="filterMenu('rapidas')" class="menu-filter bg-gray-200 text-gray-700 px-6 py-2 rounded-full transition hover:bg-amber-100" data-category="rapidas">Comidas Rápidas</button>
+            </div>
+            
+            <!-- Grid de Productos -->
+            <div id="menu-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Los productos se generan dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN: PEDIDOS EN LÍNEA
+         ============================================ -->
+    <section id="pedidos" class="py-20 bg-amber-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <span class="bg-amber-500/30 text-amber-300 px-4 py-1 rounded-full text-sm font-semibold">Nuevo Servicio</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Pedidos en Línea<br>¡Directo a tu Puerta!</h2>
+                    <p class="text-amber-100 text-lg mb-8">
+                        Ahora puedes ordenar tus productos favoritos desde la comodidad de tu hogar. 
+                        Entrega rápida, pago seguro y productos siempre frescos.
+                    </p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-xl">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl">1. Selecciona</h4>
+                                <p class="text-amber-200">Elige tus productos favoritos del menú</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-xl">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl">2. Personaliza</h4>
+                                <p class="text-amber-200">Agrega instrucciones especiales si lo deseas</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-xl">
+                                <i class="fas fa-motorcycle"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl">3. Recibe</h4>
+                                <p class="text-amber-200">Entrega en 30-45 minutos garantizada</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="scrollToMenu()" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition transform hover:scale-105">
+                            <i class="fas fa-utensils mr-2"></i>Ordenar Ahora
+                        </button>
+                        <div class="flex items-center space-x-2 text-amber-200">
+                            <i class="fas fa-phone"></i>
+                            <span class="text-lg">Línea directa: (123) 456-7890</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative" data-aos="fade-left">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                        <h3 class="text-2xl font-bold mb-6">Horario de Entregas</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center py-2 border-b border-white/20">
+                                <span>Lunes - Viernes</span>
+                                <span class="font-semibold">7:00 AM - 9:00 PM</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-white/20">
+                                <span>Sábados</span>
+                                <span class="font-semibold">7:00 AM - 10:00 PM</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-white/20">
+                                <span>Domingos</span>
+                                <span class="font-semibold">8:00 AM - 8:00 PM</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 text-amber-300">
+                                <span>Festivos</span>
+                                <span class="font-semibold">Consultar disponibilidad</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-amber-500/20 rounded-xl">
+                            <p class="text-sm text-center">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                Envío gratis en pedidos mayores a $25.00
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN: GALERÍA
+         ============================================ -->
+    <section id="galeria" class="py-20 bg-amber-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Momentos Especiales</span>
+                <h2 class="text-4xl font-bold text-gray-900 mt-2">Galería de Sabores</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="gallery-grid">
+                <!-- Imágenes de la galería -->
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(0)">
+                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Pan artesanal">
+                </div>
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(1)">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Torta de chocolate">
+                </div>
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(2)">
+                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Cupcakes">
+                </div>
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(3)">
+                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Café y croissant">
+                </div>
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(4)">
+                    <img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Hamburguesa">
+                </div>
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(5)">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Plato principal">
+                </div>
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(6)">
+                    <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Donuts">
+                </div>
+                <div class="gallery-item rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox(7)">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         class="w-full h-64 object-cover transition duration-500 group-hover:scale-110" alt="Interior local">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-4xl hover:text-amber-400 transition">&times;</button>
+        <button onclick="changeImage(-1)" class="absolute left-4 text-white text-4xl hover:text-amber-400 transition"><i class="fas fa-chevron-left"></i></button>
+        <img id="lightbox-img" src="" class="max-h-[90vh] max-w-[90vw] rounded-lg shadow-2xl" alt="">
+        <button onclick="changeImage(1)" class="absolute right-4 text-white text-4xl hover:text-amber-400 transition"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- ============================================
+         SECCIÓN: TESTIMONIOS
+         ============================================ -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Clientes Felices</span>
+                <h2 class="text-4xl font-bold text-gray-900 mt-2">Lo que Dicen de Nosotros</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-amber-50 p-8 rounded-2xl relative" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-amber-400 text-4xl mb-4">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"El mejor pan artesanal de la ciudad. Desde que descubrí esta panadería, no compro pan en ningún otro lado. La baguette es simplemente perfecta."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900">María González</h4>
+                            <div class="text-amber-400 text-sm">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-amber-50 p-8 rounded-2xl relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-amber-400 text-4xl mb-4">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"Encargué una torta para el cumpleaños de mi hija y superó todas mis expectativas. Hermosa, deliciosa y el servicio impecable. ¡Totalmente recomendados!"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Carlos Rodríguez</h4>
+                            <div class="text-amber-400 text-sm">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-amber-50 p-8 rounded-2xl relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-amber-400 text-4xl mb-4">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"Vengo todos los domingos a desayunar con mi familia. La atención es familiar, la comida casera deliciosa y los precios muy justos. Mi lugar favorito."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Ana Martínez</h4>
+                            <div class="text-amber-400 text-sm">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN: CONTACTO Y UBICACIÓN
+         ============================================ -->
+    <section id="contacto" class="py-20 bg-amber-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Estamos Aquí</span>
+                <h2 class="text-4xl font-bold text-gray-900 mt-2">Visítanos</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Información de Contacto -->
+                <div data-aos="fade-right">
+                    <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Información de Contacto</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Dirección</h4>
+                                    <p class="text-gray-600">Calle Principal #123, Centro Histórico<br>Ciudad de México, CP 01000</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 flex-shrink-0">
+                                    <i class="fas fa-phone text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Teléfono</h4>
+                                    <p class="text-gray-600">(123) 456-7890<br>(123) 456-7891</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 flex-shrink-0">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Email</h4>
+                                    <p class="text-gray-600">info@deliciasartesanales.com<br>pedidos@deliciasartesanales.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 flex-shrink-0">
+                                    <i class="fas fa-clock text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-1">Horario de Atención</h4>
+                                    <p class="text-gray-600">Lun - Vie: 6:00 AM - 9:00 PM<br>Sáb - Dom: 7:00 AM - 10:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Formulario de Contacto -->
+                        <form class="mt-8 space-y-4" onsubmit="handleContactSubmit(event)">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Nombre" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition">
+                                <input type="email" placeholder="Email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition">
+                            </div>
+                            <input type="text" placeholder="Asunto" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition">
+                            <textarea placeholder="Mensaje" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition resize-none"></textarea>
+                            <button type="submit" class="w-full bg-amber-600 text-white py-3 rounded-lg font-semibold hover:bg-amber-700 transition transform hover:scale-[1.02]">
+                                <i class="fas fa-paper-plane mr-2"></i>Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Mapa de Google Maps -->
+                <div data-aos="fade-left">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden h-full">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.661515913!2d-99.133208!3d19.432608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDI1JzU3LjQiTiA5OcKwMDcnNTkuNiJX!5e0!3m2!1ses!2smx!4v1234567890" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; min-height: 500px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            class="rounded-2xl">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECCIÓN: FOOTER
+         ============================================ -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center text-white font-bold">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Delicias Artesanales</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Tradición panadera desde 1995. Comprometidos con la calidad, el sabor artesanal y la satisfacción de nuestros clientes.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-amber-400">Enlaces Rápidos</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#inicio" class="hover:text-white transition">Inicio</a></li>
+                        <li><a href="#nosotros" class="hover:text-white transition">Nosotros</a></li>
+                        <li><a href="#menu" class="hover:text-white transition">Menú</a></li>
+                        <li><a href="#galeria" class="hover:text-white transition">Galería</a></li>
+                        <li><a href="#contacto" class="hover:text-white transition">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-amber-400">Servicios</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Panadería</a></li>
+                        <li><a href="#" class="hover:text-white transition">Repostería</a></li>
+                        <li><a href="#" class="hover:text-white transition">Restaurante</a></li>
+                        <li><a href="#" class="hover:text-white transition">Catering</a></li>
+                        <li><a href="#" class="hover:text-white transition">Eventos</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-amber-400">Síguenos</h4>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="https://facebook.com" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Suscríbete a nuestro newsletter:</p>
+                    <div class="flex mt-2">
+                        <input type="email" placeholder="Tu email" class="bg-gray-800 text-white px-4 py-2 rounded-l-lg outline-none w-full text-sm">
+                        <button class="bg-amber-600 px-4 py-2 rounded-r-lg hover:bg-amber-700 transition">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 Delicias Artesanales. Todos los derechos reservados.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0 text-sm text-gray-400">
+                    <a href="#" class="hover:text-white transition">Política de Privacidad</a>
+                    <a href="#" class="hover:text-white transition">Términos de Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         COMPONENTES ADICIONALES
+         ============================================ -->
+
+    <!-- Botón Flotante WhatsApp -->
+    <a href="https://wa.me/1234567890?text=Hola!%20Vengo%20de%20la%20web%20y%20quiero%20hacer%20un%20pedido" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-2xl floating-whatsapp z-40 hover:bg-green-600 transition transform hover:scale-110">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Chat Widget -->
+    <div class="fixed bottom-24 right-6 z-40">
+        <button onclick="toggleChat()" class="bg-amber-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-amber-700 transition mb-2">
+            <i class="fas fa-comments"></i>
+        </button>
+        
+        <div id="chat-widget" class="chat-widget hidden bg-white rounded-2xl shadow-2xl w-80 overflow-hidden border border-gray-200">
+            <div class="bg-amber-600 text-white p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <span class="font-semibold">Asistente Virtual</span>
+                </div>
+                <button onclick="toggleChat()" class="text-white hover:text-amber-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="chat-messages" class="h-64 overflow-y-auto p-4 space-y-3 bg-gray-50">
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 text-xs flex-shrink-0">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm text-sm max-w-[80%]">
+                        ¡Hola! 👋 Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white border-t border-gray-200">
+                <div class="flex space-x-2">
+                    <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." 
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-amber-500"
+                           onkeypress="if(event.key==='Enter')sendMessage()">
+                    <button onclick="sendMessage()" class="bg-amber-600 text-white px-3 py-2 rounded-lg hover:bg-amber-700 transition">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
+                    <button onclick="quickReply('Ver menú')" class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-amber-200">Ver menú</button>
+                    <button onclick="quickReply('Hacer pedido')" class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-amber-200">Hacer pedido</button>
+                    <button onclick="quickReply('Horarios')" class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-amber-200">Horarios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrito de Compras Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-gray-900">Tu Carrito</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="p-6 space-y-4">
+                <!-- Items del carrito se generan dinámicamente -->
+                <p class="text-center text-gray-500 py-8">Tu carrito está vacío</p>
+            </div>
+            <div class="p-6 border-t border-gray-200 bg-gray-50">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">Total:</span>
+                    <span id="cart-total" class="text-2xl font-bold text-amber-600">$0.00</span>
+                </div>
+                <button onclick="checkout()" class="w-full bg-amber-600 text-white py-3 rounded-lg font-semibold hover:bg-amber-700 transition">
+                    <i class="fab fa-whatsapp mr-2"></i>Completar Pedido por WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PANEL DE ADMINISTRACIÓN (Editable)
+         ============================================ -->
+    <div id="admin-panel" class="admin-panel items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-amber-600 text-white rounded-t-2xl">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-cog text-2xl"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold">Panel de Administración</h3>
+                        <p class="text-amber-100 text-sm">Gestiona precios, productos y contenido</p>
+                    </div>
+                </div>
+                <button onclick="toggleAdmin()" class="text-white hover:text-amber-200 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <!-- Tabs -->
+                <div class="flex space-x-2 mb-6 border-b border-gray-200">
+                    <button onclick="switchAdminTab('products')" class="admin-tab active px-4 py-2 border-b-2 border-amber-600 text-amber-600 font-semibold" data-tab="products">Productos</button>
+                    <button onclick="switchAdminTab('texts')" class="admin-tab px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-amber-600" data-tab="texts">Textos</button>
+                    <button onclick="switchAdminTab('images')" class="admin-tab px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-amber-600" data-tab="images">Imágenes</button>
+                    <button onclick="switchAdminTab('settings')" class="admin-tab px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-amber-600" data-tab="settings">Configuración</button>
+                </div>
+                
+                <!-- Tab Productos -->
+                <div id="tab-products" class="admin-tab-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-lg font-semibold">Gestión de Productos</h4>
+                        <button onclick="addNewProduct()" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition text-sm">
+                            <i class="fas fa-plus mr-2"></i>Agregar Producto
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Producto</th>
+                                    <th class="px-4 py-2 text-left">Categoría</th>
+                                    <th class="px-4 py-2 text-left">Precio</th>
+                                    <th class="px-4 py-2 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-products-list">
+                                <!-- Productos se cargan dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Tab Textos -->
+                <div id="tab-texts" class="admin-tab-content hidden">
+                    <h4 class="text-lg font-semibold mb-4">Editar Textos Principales</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Negocio</label>
+                            <input type="text" id="admin-business-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-amber-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Eslogan Principal</label>
+                            <input type="text" id="admin-slogan" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-amber-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Descripción Nosotros</label>
+                            <textarea id="admin-about" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-amber-500 outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono WhatsApp</label>
+                            <input type="text" id="admin-whatsapp" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-amber-500 outline-none">
+                        </div>
+                        <button onclick="saveTextChanges()" class="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition">
+                            <i class="fas fa-save mr-2"></i>Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tab Imágenes -->
+                <div id="tab-images" class="admin-tab-content hidden">
+                    <h4 class="text-lg font-semibold mb-4">Cambiar Imágenes</h4>
+                    <p class="text-sm text-gray-600 mb-4">Ingresa URLs de imágenes (Unsplash, etc.)</p>
+                    <div class="space-y-4" id="admin-images-list">
+                        <!-- Campos de imágenes se generan dinámicamente -->
+                    </div>
+                    <button onclick="saveImageChanges()" class="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition mt-4">
+                        <i class="fas fa-save mr-2"></i>Actualizar Imágenes
+                    </button>
+                </div>
+                
+                <!-- Tab Configuración -->
+                <div id="tab-settings" class="admin-tab-content hidden">
+                    <h4 class="text-lg font-semibold mb-4">Configuración General</h4>
+                    <div class="space-y-4">
+                        <div class="bg-amber-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-amber-900 mb-2">Exportar/Importar Datos</h5>
+                            <p class="text-sm text-amber-700 mb-3">Guarda tu configuración o carga datos previos.</p>
+                            <div class="flex space-x-2">
+                                <button onclick="exportData()" class="flex-1 bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition text-sm">
+                                    <i class="fas fa-download mr-2"></i>Exportar JSON
+                                </button>
+                                <label class="flex-1 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition text-sm text-center cursor-pointer">
+                                    <i class="fas fa-upload mr-2"></i>Importar JSON
+                                    <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(this)">
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-blue-900 mb-2">Modo Demo</h5>
+                            <p class="text-sm text-blue-700 mb-3">Restaura los datos de ejemplo originales.</p>
+                            <button onclick="resetToDemo()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition text-sm">
+                                <i class="fas fa-undo mr-2"></i>Restaurar Datos Demo
+                            </button>
+                        </div>
+                        
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-red-900 mb-2">Zona Peligrosa</h5>
+                            <button onclick="clearAllData()" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition text-sm">
+                                <i class="fas fa-trash mr-2"></i>Borrar Todos los Datos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal para Admin -->
+    <div id="admin-login" class="fixed inset-0 bg-black/80 z-[9999] hidden items-center justify-center">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 gold-gradient rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900">Acceso Administrativo</h3>
+                <p class="text-gray-600 text-sm mt-2">Ingresa la contraseña para editar el contenido</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="admin-password" placeholder="Contraseña" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none">
+                <p class="text-xs text-gray-500">Contraseña por defecto: admin123</p>
+                <button onclick="checkAdminPassword()" class="w-full bg-amber-600 text-white py-3 rounded-lg font-semibold hover:bg-amber-700 transition">
+                    Acceder
+                </button>
+                <button onclick="closeAdminLogin()" class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificación Toast -->
+    <div id="toast" class="fixed top-24 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex items-center">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span id="toast-message">Operación exitosa</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // ==========================================
+        // DATOS INICIALES (EDITABLES)
+        // ==========================================
+        const defaultData = {
+            business: {
+                name: "Delicias Artesanales",
+                slogan: "Sabor que Enamora, Tradición que Perdura",
+                about: "Desde 1995, hemos mantenido viva la tradición de la panadería artesanal. Lo que comenzó como un pequeño horno familiar se ha convertido en un referente de sabor y calidad.",
+                phone: "1234567890",
+                email: "info@deliciasartesanales.com",
+                address: "Calle Principal #123, Centro Histórico"
+            },
+            products: [
+                { id: 1, name: "Baguette Tradicional", category: "panaderia", price: 2.50, image: "https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Pan francés crujiente por fuera, suave por dentro" },
+                { id: 2, name: "Croissant de Mantequilla", category: "panaderia", price: 1.80, image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Hojaldre dorado y crujiente" },
+                { id: 3, name: "Pan Integral Multigrano", category: "panaderia", price: 3.20, image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Con semillas de chía, lino y girasol" },
+                { id: 4, name: "Torta de Chocolate", category: "reposteria", price: 25.00, image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Tres capas de chocolate belga" },
+                { id: 5, name: "Cupcakes Vainilla", category: "reposteria", price: 3.50, image: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Pack de 6 unidades decorados" },
+                { id: 6, name: "Tarta de Frutas", category: "reposteria", price: 18.00, image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Crema pastelera y frutas frescas" },
+                { id: 7, name: "Café Americano", category: "refresqueria", price: 2.00, image: "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Café de especialidad 100% arábica" },
+                { id: 8, name: "Smoothie Tropical", category: "refresqueria", price: 4.50, image: "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Mango, piña y maracuyá" },
+                { id: 9, name: "Chocolate Caliente", category: "refresqueria", price: 3.00, image: "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Con malvaviscos caseros" },
+                { id: 10, name: "Desayuno Completo", category: "restaurante", price: 8.50, image: "https://images.unsplash.com/photo-1533089862017-5614ec95e214?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Huevos, tocino, pan y café" },
+                { id: 11, name: "Almuerzo Ejecutivo", category: "restaurante", price: 12.00, image: "https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Sopa, segundo y bebida" },
+                { id: 12, name: "Ensalada César", category: "restaurante", price: 9.00, image: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Con pollo grillado y crutones" },
+                { id: 13, name: "Hamburguesa Clásica", category: "rapidas", price: 7.50, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Carne 100% res, queso cheddar" },
+                { id: 14, name: "Hot Dog Especial", category: "rapidas", price: 4.50, image: "https://images.unsplash.com/photo-1612392062126-2f3db5023f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Con tocino, cebolla caramelizada" },
+                { id: 15, name: "Papas Fritas Caseras", category: "rapidas", price: 3.00, image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", description: "Con salsa especial de la casa" }
+            ],
+            images: {
+                hero: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+                about: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ]
+            }
+        };
+
+        // Variables globales
+        let appData = {};
+        let cart = [];
+        let currentCategory = 'all';
+        let currentImageIndex = 0;
+        let isAdmin = false;
+
+        // ==========================================
+        // INICIALIZACIÓN
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar datos desde localStorage o usar default
+            loadData();
+            
+            // Inicializar AOS (Animaciones)
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+            
+            // Renderizar contenido
+            renderMenu();
+            updateCartUI();
+            loadAdminData();
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-lg');
+                } else {
+                    navbar.classList.remove('shadow-lg');
+                }
+            });
+        });
+
+        // ==========================================
+        // MANEJO DE DATOS (LOCALSTORAGE)
+        // ==========================================
+        function loadData() {
+            const saved = localStorage.getItem('deliciasData');
+            if (saved) {
+                appData = JSON.parse(saved);
+            } else {
+                appData = JSON.parse(JSON.stringify(defaultData));
+                saveData();
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('deliciasData', JSON.stringify(appData));
+        }
+
+        function resetToDemo() {
+            if (confirm('¿Restaurar todos los datos a los valores de demostración?')) {
+                appData = JSON.parse(JSON.stringify(defaultData));
+                saveData();
+                location.reload();
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('¿Estás seguro de borrar todos los datos? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem('deliciasData');
+                location.reload();
+            }
+        }
+
+        // ==========================================
+        // RENDERIZADO DEL MENÚ
+        // ==========================================
+        function renderMenu() {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = '';
+            
+            const filtered = currentCategory === 'all' 
+                ? appData.products 
+                : appData.products.filter(p => p.category === currentCategory);
+            
+            filtered.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100';
+                card.setAttribute('data-aos', 'fade-up');
+                card.setAttribute('data-aos-delay', (index % 3) * 100);
+                
+                card.innerHTML = `
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute top-4 right-4 price-tag px-4 py-1 text-white font-bold shadow-lg">
+                            $${product.price.toFixed(2)}
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-amber-800 capitalize">
+                            ${product.category}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">${product.name}</h3>
+                        <p class="text-gray-600 text-sm mb-4">${product.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-amber-600">$${product.price.toFixed(2)}</span>
+                            <button onclick="addToCart(${product.id})" class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition flex items-center">
+                                <i class="fas fa-plus mr-2"></i>Agregar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMenu(category) {
+            currentCategory = category;
+            
+            // Update buttons
+            document.querySelectorAll('.menu-filter').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                    btn.classList.add('bg-amber-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-amber-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+            
+            renderMenu();
+        }
+
+        // ==========================================
+        // CARRITO DE COMPRAS
+        // ==========================================
+        function addToCart(productId) {
+            const product = appData.products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+            
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartUI();
+            showToast(`${product.name} agregado al carrito`);
+            
+            // Animación del botón del carrito
+            const cartBtn = document.querySelector('.fa-shopping-cart').parentElement;
+            cartBtn.classList.add('scale-110');
+            setTimeout(() => cartBtn.classList.remove('scale-110'), 200);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+            
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-center text-gray-500 py-8">Tu carrito está vacío</p>';
+                cartTotal.textContent = '$0.00';
+                return;
+            }
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                    <div class="flex items-center space-x-4">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                        <div>
+                            <h4 class="font-semibold text-gray-900">${item.name}</h4>
+                            <p class="text-amber-600 font-bold">$${item.price.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition">
+                            <i class="fas fa-minus text-xs"></i>
+                        </button>
+                        <span class="font-semibold w-8 text-center">${item.quantity}</span>
+                        <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                        <button onclick="removeFromCart(${item.id})" class="ml-2 text-red-500 hover:text-red-700">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = '$' + total.toFixed(2);
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('El carrito está vacío');
+                return;
+            }
+            
+            let message = '¡Hola! Quiero hacer el siguiente pedido:%0A%0A';
+            let total = 0;
+            
+            cart.forEach(item => {
+                message += `• ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0A`;
+                total += item.price * item.quantity;
+            });
+            
+            message += `%0ATotal: $${total.toFixed(2)}%0A%0AGracias!`;
+            
+            window.open(`https://wa.me/${appData.business.phone}?text=${message}`, '_blank');
+        }
+
+        // ==========================================
+        // CHAT WIDGET
+        // ==========================================
+        function toggleChat() {
+            const chat = document.getElementById('chat-widget');
+            chat.classList.toggle('hidden');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Respuesta automática simulada
+            setTimeout(() => {
+                const reply = getAutoReply(message);
+                addMessage(reply, 'bot');
+            }, 1000);
+        }
+
+        function quickReply(text) {
+            addMessage(text, 'user');
+            setTimeout(() => {
+                const reply = getAutoReply(text);
+                addMessage(reply, 'bot');
+            }, 800);
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'flex items-start space-x-2 ' + (sender === 'user' ? 'flex-row-reverse space-x-reverse' : '');
+            
+            const avatar = sender === 'bot' 
+                ? '<div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 text-xs flex-shrink-0"><i class="fas fa-robot"></i></div>'
+                : '<div class="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0"><i class="fas fa-user"></i></div>';
+            
+            const bubble = `<div class="${sender === 'user' ? 'bg-amber-600 text-white' : 'bg-white'} p-3 rounded-lg ${sender === 'user' ? 'rounded-tr-none' : 'rounded-tl-none'} shadow-sm text-sm max-w-[80%]">${text}</div>`;
+            
+            div.innerHTML = avatar + bubble;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function getAutoReply(message) {
+            const lower = message.toLowerCase();
+            if (lower.includes('hola') || lower.includes('buenas')) {
+                return '¡Hola! 👋 Bienvenido a Delicias Artesanales. ¿En qué puedo ayudarte? Puedes preguntarme sobre nuestro menú, horarios o hacer un pedido.';
+            } else if (lower.includes('menu') || lower.includes('menú') || lower.includes('precio')) {
+                return 'Tenemos una gran variedad: panadería artesanal (desde $1.80), repostería fina (desde $3.50), comidas rápidas (desde $3.00) y restaurante (desde $8.50). ¿Te gustaría ver alguna categoría específica?';
+            } else if (lower.includes('horario') || lower.includes('hora')) {
+                return 'Abrimos de Lunes a Viernes de 6:00 AM a 9:00 PM, Sábados de 7:00 AM a 10:00 PM y Domingos de 8:00 AM a 8:00 PM. ¡Te esperamos!';
+            } else if (lower.includes('pedido') || lower.includes('ordenar') || lower.includes('comprar')) {
+                return 'Puedes hacer tu pedido directamente por WhatsApp haciendo clic en el botón verde de la esquina, o agregar productos al carrito desde nuestro menú. ¿Te gustaría que te transfiera con un asesor?';
+            } else if (lower.includes('domicilio') || lower.includes('entrega') || lower.includes('delivery')) {
+                return '¡Sí hacemos entregas a domicilio! 🛵 El tiempo estimado es de 30-45 minutos y es gratis en pedidos mayores a $25.00. ¿Cuál es tu dirección?';
+            } else if (lower.includes('torta') || lower.includes('pastel') || lower.includes('cake')) {
+                return 'Nuestras tortas son personalizadas y requieren pedido con 48h de anticipación. Tenemos de chocolate ($25), vainilla ($22), red velvet ($28) y más. ¿Para qué fecha la necesitas?';
+            } else {
+                return 'Entiendo. Para ayudarte mejor, ¿podrías especificar si buscas información sobre productos específicos, precios, o deseas hacer un pedido? También puedes llamarnos al (123) 456-7890.';
+            }
+        }
+
+        // ==========================================
+        // GALERÍA LIGHTBOX
+        // ==========================================
+        const galleryImages = [
+            "https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1561758033-d89a9ad46330?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+        ];
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            document.getElementById('lightbox-img').src = galleryImages[index];
+            document.getElementById('lightbox').classList.remove('hidden');
+            document.getElementById('lightbox').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+            document.getElementById('lightbox').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = galleryImages.length - 1;
+            if (currentImageIndex >= galleryImages.length) currentImageIndex = 0;
+            document.getElementById('lightbox-img').src = galleryImages[currentImageIndex];
+        }
+
+        // Cerrar lightbox con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // ==========================================
+        // PANEL DE ADMINISTRACIÓN
+        // ==========================================
+        function toggleAdmin() {
+            document.getElementById('admin-login').classList.remove('hidden');
+            document.getElementById('admin-login').classList.add('flex');
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('admin-login').classList.add('hidden');
+            document.getElementById('admin-login').classList.remove('flex');
+        }
+
+        function checkAdminPassword() {
+            const pass = document.getElementById('admin-password').value;
+            if (pass === 'admin123') {
+                isAdmin = true;
+                closeAdminLogin();
+                document.getElementById('admin-panel').classList.add('active');
+                loadAdminData();
+            } else {
+                alert('Contraseña incorrecta. Intenta de nuevo.');
+            }
+        }
+
+        function toggleAdminPanel() {
+            if (!isAdmin) {
+                toggleAdmin();
+            } else {
+                document.getElementById('admin-panel').classList.remove('active');
+                isAdmin = false;
+            }
+        }
+
+        function switchAdminTab(tab) {
+            // Update buttons
+            document.querySelectorAll('.admin-tab').forEach(btn => {
+                if (btn.dataset.tab === tab) {
+                    btn.classList.add('border-amber-600', 'text-amber-600');
+                    btn.classList.remove('border-transparent', 'text-gray-500');
+                } else {
+                    btn.classList.remove('border-amber-600', 'text-amber-600');
+                    btn.classList.add('border-transparent', 'text-gray-500');
+                }
+            });
+            
+            // Show content
+            document.querySelectorAll('.admin-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById('tab-' + tab).classList.remove('hidden');
+        }
+
+        function loadAdminData() {
+            // Cargar productos en tabla
+            const tbody = document.getElementById('admin-products-list');
+            tbody.innerHTML = appData.products.map(p => `
+                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                    <td class="px-4 py-2">
+                        <input type="text" value="${p.name}" onchange="updateProduct(${p.id}, 'name', this.value)" class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                    </td>
+                    <td class="px-4 py-2">
+                        <select onchange="updateProduct(${p.id}, 'category', this.value)" class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                            <option value="panaderia" ${p.category === 'panaderia' ? 'selected' : ''}>Panadería</option>
+                            <option value="reposteria" ${p.category === 'reposteria' ? 'selected' : ''}>Repostería</option>
+                            <option value="refresqueria" ${p.category === 'refresqueria' ? 'selected' : ''}>Refresquería</option>
+                            <option value="restaurante" ${p.category === 'restaurante' ? 'selected' : ''}>Restaurante</option>
+                            <option value="rapidas" ${p.category === 'rapidas' ? 'selected' : ''}>Comidas Rápidas</option>
+                        </select>
+                    </td>
+                    <td class="px-4 py-2">
+                        <input type="number" step="0.01" value="${p.price}" onchange="updateProduct(${p.id}, 'price', parseFloat(this.value))" class="w-24 px-2 py-1 border border-gray-300 rounded text-sm">
+                    </td>
+                    <td class="px-4 py-2 text-center">
+                        <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Cargar textos
+            document.getElementById('admin-business-name').value = appData.business.name;
+            document.getElementById('admin-slogan').value = appData.business.slogan;
+            document.getElementById('admin-about').value = appData.business.about;
+            document.getElementById('admin-whatsapp').value = appData.business.phone;
+            
+            // Cargar imágenes
+            const imgContainer = document.getElementById('admin-images-list');
+            imgContainer.innerHTML = `
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Imagen Hero (URL)</label>
+                    <input type="text" id="img-hero" value="${appData.images.hero}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Imagen Nosotros (URL)</label>
+                    <input type="text" id="img-about" value="${appData.images.about}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                </div>
+            `;
+        }
+
+        function updateProduct(id, field, value) {
+            const product = appData.products.find(p => p.id === id);
+            if (product) {
+                product[field] = value;
+                saveData();
+                renderMenu();
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('¿Eliminar este producto?')) {
+                appData.products = appData.products.filter(p => p.id !== id);
+                saveData();
+                loadAdminData();
+                renderMenu();
+                showToast('Producto eliminado');
+            }
+        }
+
+        function addNewProduct() {
+            const newId = Math.max(...appData.products.map(p => p.id)) + 1;
+            appData.products.push({
+                id: newId,
+                name: "Nuevo Producto",
+                category: "panaderia",
+                price: 0.00,
+                image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                description: "Descripción del producto"
+            });
+            saveData();
+            loadAdminData();
+            renderMenu();
+            showToast('Producto agregado');
+        }
+
+        function saveTextChanges() {
+            appData.business.name = document.getElementById('admin-business-name').value;
+            appData.business.slogan = document.getElementById('admin-slogan').value;
+            appData.business.about = document.getElementById('admin-about').value;
+            appData.business.phone = document.getElementById('admin-whatsapp').value;
+            
+            saveData();
+            showToast('Cambios guardados correctamente');
+            
+            // Actualizar UI
+            document.querySelector('h1').textContent = appData.business.name;
+        }
+
+        function saveImageChanges() {
+            appData.images.hero = document.getElementById('img-hero').value;
+            appData.images.about = document.getElementById('img-about').value;
+            saveData();
+            showToast('Imágenes actualizadas. Recarga la página para ver cambios.');
+        }
+
+        // ==========================================
+        // EXPORTAR/IMPORTAR DATOS
+        // ==========================================
+        function exportData() {
+            const dataStr = JSON.stringify(appData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'delicias-config.json';
+            link.click();
+            showToast('Configuración exportada');
+        }
+
+        function importData(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    appData = data;
+                    saveData();
+                    showToast('Datos importados correctamente. Recargando...');
+                    setTimeout(() => location.reload(), 1500);
+                } catch (err) {
+                    alert('Error al importar el archivo. Verifica que sea un JSON válido.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // ==========================================
+        // UTILIDADES
+        // ==========================================
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function scrollToMenu() {
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast('Mensaje enviado. Te contactaremos pronto!');
+            e.target.reset();
+        }
+
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Cerrar menú móvil si está abierto
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
